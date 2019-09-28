@@ -3,10 +3,10 @@ import java.util.Scanner;
 
 public class TicTacToe {
     public static String A1,A2,A3,B1,B2,B3,C1,C2,C3;
-    public static int row, col;
-    public static Scanner scan = new Scanner(System.in);
-    public static char[][] board = new char[3][3];
-    public static char turn = 'X';
+    private static Scanner scan = new Scanner(System.in);
+    private static char[][] board = new char[3][3];
+    private static char turn = 'X';
+    private static int currentPlayer = 1;
 
     public static void main(String[] args) {
         for (int i = 0; i < 3; i++){
@@ -18,14 +18,24 @@ public class TicTacToe {
         play();
     }
 
-    public static void play() {
+    private static void play() {
         boolean playing = true;
         while(playing) {
+            int row, col;
+            System.out.printf("Player %d, enter your move: ", currentPlayer);
             String move = scan.nextLine();
             ArrayList<Integer> moves = confirmMove(move);
+
             row = moves.get(0);
             col = moves.get(1);
+            while(row == -1 || col == -1) {
+                System.out.print("Invalid move. Try again: ");
+                move = scan.nextLine();
+                moves = confirmMove(move);
 
+                row = moves.get(0);
+                col = moves.get(1);
+            }
             board[row][col] = turn;
 
             if (gameOver(row, col)) {
@@ -35,49 +45,53 @@ public class TicTacToe {
 
             printBoard();
 
-            if(turn == 'X')
+            if(turn == 'X') {
+                currentPlayer = 2;
                 turn = 'O';
-            else
+            }
+            else {
+                currentPlayer = 1;
                 turn = 'X';
-
+            }
         }
     }
 
-    public static ArrayList<Integer> confirmMove(String move) {
+    private static ArrayList<Integer> confirmMove(String move) {
         ArrayList<Integer> moves = new ArrayList<>();
-        if(move.equalsIgnoreCase("A1")){
+
+        if(move.equalsIgnoreCase("A1") & board[0][0] == '_'){
             moves.add(0);
             moves.add(0);
         }
-        else if(move.equalsIgnoreCase("A2")){
+        else if(move.equalsIgnoreCase("A2") & board[0][1] == '_'){
             moves.add(0);
             moves.add(1);
         }
-        else if(move.equalsIgnoreCase("A3")){
+        else if(move.equalsIgnoreCase("A3") & board[0][2] == '_'){
             moves.add(0);
             moves.add(2);
         }
-        else if(move.equalsIgnoreCase("B1")){
+        else if(move.equalsIgnoreCase("B1") & board[1][0] == '_'){
             moves.add(1);
             moves.add(0);
         }
-        else if(move.equalsIgnoreCase("B2")){
+        else if(move.equalsIgnoreCase("B2") & board[1][1] == '_'){
             moves.add(1);
             moves.add(1);
         }
-        else if(move.equalsIgnoreCase("B3")){
+        else if(move.equalsIgnoreCase("B3") & board[1][2] == '_'){
             moves.add(1);
             moves.add(2);
         }
-        else if(move.equalsIgnoreCase("C1")){
+        else if(move.equalsIgnoreCase("C1") & board[2][0] == '_'){
             moves.add(2);
             moves.add(0);
         }
-        else if(move.equalsIgnoreCase("C2")){
+        else if(move.equalsIgnoreCase("C2") & board[2][1] == '_'){
             moves.add(2);
             moves.add(1);
         }
-        else if(move.equalsIgnoreCase("C3")){
+        else if(move.equalsIgnoreCase("C3") & board[2][2] == '_'){
             moves.add(2);
             moves.add(2);
         }
@@ -89,9 +103,7 @@ public class TicTacToe {
         return moves;
     }
 
-
-
-    public static void printBoard() {
+    private static void printBoard() {
         for (int i = 0; i < 3; i++){
             System.out.println();
             for(int j = 0; j < 3; j++) {
@@ -101,9 +113,10 @@ public class TicTacToe {
             }
         }
         System.out.println();
+        System.out.println();
     }
 
-    public static boolean gameOver(int rMove, int cMove) {
+    private static boolean gameOver(int rMove, int cMove) {
         if(board[0][cMove] == board[1][cMove] && board[0][cMove] == board[2][cMove])
             return true;
         if(board[rMove][0] == board[rMove][1] && board[rMove][0] == board[rMove][2])
