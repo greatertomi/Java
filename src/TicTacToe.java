@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -56,50 +57,52 @@ public class TicTacToe {
         }
     }
 
+    // Method responsible for adding "X's" and "O's" to the 'moves' array. 
+    // Helps avoid repetition in the 'confirmMove' method and passes a return value when 
+    // called in confirmMove() which confirmMove() returns in turn.
+
+    private static ArrayList<Integer> addMove(int x, int y) {
+        ArrayList<Integer> moves = new ArrayList<>();
+
+        moves.add(x);
+        moves.add(y);
+
+        return moves;
+    }
+
     private static ArrayList<Integer> confirmMove(String move) {
         ArrayList<Integer> moves = new ArrayList<>();
 
         if(move.equalsIgnoreCase("A1") & board[0][0] == '_'){
-            moves.add(0);
-            moves.add(0);
+           moves = addMove(0, 0);
         }
         else if(move.equalsIgnoreCase("A2") & board[0][1] == '_'){
-            moves.add(0);
-            moves.add(1);
+           moves = addMove(0, 1);
         }
         else if(move.equalsIgnoreCase("A3") & board[0][2] == '_'){
-            moves.add(0);
-            moves.add(2);
+            moves = addMove(0, 2);
         }
         else if(move.equalsIgnoreCase("B1") & board[1][0] == '_'){
-            moves.add(1);
-            moves.add(0);
+            moves = addMove(1, 0);
         }
         else if(move.equalsIgnoreCase("B2") & board[1][1] == '_'){
-            moves.add(1);
-            moves.add(1);
+            moves = addMove(1, 1);
         }
         else if(move.equalsIgnoreCase("B3") & board[1][2] == '_'){
-            moves.add(1);
-            moves.add(2);
+            moves = addMove(1, 2);
         }
         else if(move.equalsIgnoreCase("C1") & board[2][0] == '_'){
-            moves.add(2);
-            moves.add(0);
+            moves = addMove(2, 0);
         }
         else if(move.equalsIgnoreCase("C2") & board[2][1] == '_'){
-            moves.add(2);
-            moves.add(1);
+            moves = addMove(2, 1);
         }
         else if(move.equalsIgnoreCase("C3") & board[2][2] == '_'){
-            moves.add(2);
-            moves.add(2);
-        }
+            moves = addMove(2, 2);
+        } 
         else {
-            moves.add(-1);
-            moves.add(-1);
+            moves = addMove(-1, -1);
         }
-
         return moves;
     }
 
